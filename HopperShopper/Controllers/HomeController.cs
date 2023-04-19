@@ -18,7 +18,33 @@ namespace HopperShopper.Controllers
       return View();
     }
 
-    public IActionResult Privacy()
+    [HttpGet]
+    [Route("/Products/{productObjectID}")]
+    public IActionResult Products([FromRoute] Guid productObjectID)
+    {
+      return View();
+    }
+
+    [HttpGet]
+    [Route("/Customers/{customerObjectID}")]
+    public IActionResult Customers([FromRoute] Guid customerObjectID)
+    {
+      return View();
+    }
+
+    public IActionResult Cart()
+    {
+      return View();
+    }
+
+    public IActionResult Orders()
+    { 
+      return View(); 
+    }
+
+    [HttpGet]
+    [Route("/Orders/{orderObjectID}")]
+    public IActionResult Order([FromRoute] Guid orderObjectID)
     {
       return View();
     }
