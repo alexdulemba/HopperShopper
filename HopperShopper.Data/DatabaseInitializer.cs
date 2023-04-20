@@ -4,7 +4,7 @@ namespace HopperShopper.Data
 {
   public static class DatabaseInitializer
   {
-    public static async Task Initialize(HopperShopperContext context)
+    public static async Task InitializeAsync(HopperShopperContext context)
     {
       if (context.Products.Any()) return;
 

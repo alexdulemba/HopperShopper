@@ -1,5 +1,6 @@
 ﻿using HopperShopper.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace HopperShopper.Data
 {
@@ -18,9 +19,7 @@ namespace HopperShopper.Data
 
     public HopperShopperContext(DbContextOptions<HopperShopperContext> options) : base(options) 
     {
-      var folder = Environment.SpecialFolder.LocalApplicationData;
-      var path = Environment.GetFolderPath(folder);
-      DbPath = Path.Join(path, "hoppershopper.db");
+      DbPath = options.ContextType.Assembly.Location;
     }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -30,7 +29,9 @@ namespace HopperShopper.Data
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-      optionsBuilder.UseSqlite($"Data Source={DbPath}");
+      Debug.WriteLine($"Path: {DbPath}");
+      base.OnConfiguring(optionsBuilder);
+      //optionsBuilder.UseSqlite($"Data Source={DbPath}");
     }
   }
 }
