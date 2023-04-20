@@ -1,0 +1,30 @@
+﻿[
+  {
+    "outputFile": "wwwroot/css/layout.css",
+    "inputFile": "wwwroot/css/layout.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/cart.css",
+    "inputFile": "wwwroot/css/cart.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/customers.css",
+    "inputFile": "wwwroot/css/customers.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/index.css",
+    "inputFile": "wwwroot/css/index.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/order.css",
+    "inputFile": "wwwroot/css/order.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/orders.css",
+    "inputFile": "wwwroot/css/orders.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/products.css",
+    "inputFile": "wwwroot/css/products.scss"
+  }
+]

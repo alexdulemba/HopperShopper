@@ -4,38 +4,34 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>@ViewData["Title"] - HopperShopper</title>
-  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-  <link rel="stylesheet" href="~/HopperShopper.styles.css" asp-append-version="true" />
+  <link rel="stylesheet" href="~/css/layout.min.css" asp-append-version="true" />
 </head>
 <body>
   <header>
     <nav>
-      <div>
+      <div id="header-title-container">
         <a asp-controller="Home" asp-action="Index">Hopper Shopper</a>
       </div>
-      <div>
+      <div id="header-search-container">
         <input type="text" placeholder="Search products" />
+        <button type="submit">Search</button>
       </div>
-      <div>
-        <a asp-controller="Home" asp-action="Orders">
-          View Orders
+      <div id="header-controls-container">
+        <a id="header-orders" asp-controller="Home" asp-action="Orders">
+          Orders
         </a>
-        <a asp-controller="Home" asp-action="Cart">
-          View Cart
+        <a id="header-cart" asp-controller="Home" asp-action="Cart">
+          Cart
         </a>
-        <a asp-controller="Home" asp-action="Customers">
-          View Profile
+        <a id="header-profile" asp-controller="Home" asp-action="Customers">
+          Profile
         </a>
       </div>
     </nav>
   </header>
-  <div>
-    <main role="main">
-      @RenderBody()
-    </main>
-  </div>
-
-  <script src="~/js/site.js" asp-append-version="true"></script>
+  <main role="main">
+    @RenderBody()
+  </main>
   @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

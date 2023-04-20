@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HopperShopper", "HopperShopper\HopperShopper.csproj", "{578EDAF1-00BC-4C57-8F73-57CA5B0E38D6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HopperShopper.Web", "HopperShopper\HopperShopper.Web.csproj", "{578EDAF1-00BC-4C57-8F73-57CA5B0E38D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HopperShopper.Entities", "HopperShopper.Entities\HopperShopper.Entities.csproj", "{A6537D38-D529-42B3-8703-562796D3CA33}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HopperShopper.Entities", "HopperShopper.Entities\HopperShopper.Entities.csproj", "{A6537D38-D529-42B3-8703-562796D3CA33}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HopperShopper.Data", "HopperShopper.Data\HopperShopper.Data.csproj", "{8514056A-BBD3-46C0-9264-7D9B963837BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{A6537D38-D529-42B3-8703-562796D3CA33}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6537D38-D529-42B3-8703-562796D3CA33}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A6537D38-D529-42B3-8703-562796D3CA33}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8514056A-BBD3-46C0-9264-7D9B963837BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8514056A-BBD3-46C0-9264-7D9B963837BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8514056A-BBD3-46C0-9264-7D9B963837BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8514056A-BBD3-46C0-9264-7D9B963837BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

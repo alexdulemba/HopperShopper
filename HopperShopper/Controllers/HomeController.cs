@@ -1,8 +1,8 @@
-﻿using HopperShopper.Models;
+﻿using HopperShopper.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace HopperShopper.Controllers
+namespace HopperShopper.Web.Controllers
 {
   public class HomeController : Controller
   {
@@ -15,7 +15,7 @@ namespace HopperShopper.Controllers
 
     public IActionResult Index()
     {
-      return View();
+      return View(new ProductsModel());
     }
 
     [HttpGet]

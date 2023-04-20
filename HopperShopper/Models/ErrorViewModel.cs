@@ -1,4 +1,4 @@
-namespace HopperShopper.Models
+namespace HopperShopper.Web.Models
 {
   public class ErrorViewModel
   {
