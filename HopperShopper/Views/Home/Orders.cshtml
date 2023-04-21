@@ -1,4 +1,24 @@
-﻿@{
+﻿@model HopperShopper.Web.Models.OrdersModel
+
+@{
   ViewData["Title"] = "Orders";
   Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<link rel="stylesheet" href="~/css/orders.min.css" />
+
+<div id="orders-container">
+  <h1 id="orders-title">Your Orders</h1>
+  <div id="back-button-container">
+    <a id="back-button" asp-action="Index" asp-controller="Home">< Back</a>
+  </div>
+@foreach (var order in Model.Orders)
+{
+  <div class="order">
+    <a class="order-name" href="/Home/Orders/@order.ObjectID">Order #@order.Id</a>
+    <span>Order placed: @order.DatePlaced.ToShortDateString()</span>
+    <span>Total: @string.Format("{0:C}", order.Total)</span>
+  </div>
+}
+</div>
+

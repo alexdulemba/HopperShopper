@@ -1,1 +1,1 @@
-﻿
+﻿.product-listing-container{width:100%;height:720px;display:flex;flex-wrap:wrap;justify-content:center;align-content:flex-start;overflow-y:auto;}.product-listing-container .product-listing{width:100%;height:60px;background-color:#219ebc;border-bottom:1px solid #023047;display:flex;justify-content:space-around;align-items:center;}.product-listing-container .product-listing .product-name{margin-left:16px;font-weight:500;font-size:18px;color:#023047;text-decoration:none;}.product-listing-container .product-listing .product-price{font-size:20px;}

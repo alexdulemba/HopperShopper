@@ -5,6 +5,17 @@
   Layout = "_Layout";
 }
 
+<link rel="stylesheet" href="~/css/index.min.css" />
+
 
 <h1>Check out our products!</h1>
+<div class="product-listing-container">
+@foreach(var product in Model.Products)
+{
+  <div class="product-listing">
+    <a class="product-name" href="/Home/Products/@product.ObjectID">@product.Name</a>
+    <span class="product-price">@string.Format("{0:C}", product.Price)</span>
+  </div>
+}
+</div>
 

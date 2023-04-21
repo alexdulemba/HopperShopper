@@ -1,4 +1,32 @@
-﻿@{
+﻿@model HopperShopper.Web.Models.OrderModel
+
+@{
   ViewData["Title"] = "Order";
-  Layout = "~/Views/Shared/_Layout.cshtml";
+  Layout = "_Layout";
 }
+
+<link rel="stylesheet" href="~/css/order.min.css" />
+
+
+<div class="product-listing-container">
+  <h1 id="title">Order #@Model.Order.Id</h1>
+  <div id="back-button-container">
+    <a id="back-button" asp-action="Index" asp-controller="Home">< Back</a>
+  </div>
+@if (Model.Products is not null)
+{
+  @foreach (var product in Model.Products)
+  {
+  <div class="product-listing">
+    <a class="product-name" href="/Home/Products/@product.ObjectID">@product.Name</a>
+    <span class="product-price">@string.Format("{0:C}", product.Price)</span>
+  </div>
+    }
+}
+else
+{
+  <span style="color: red; font-size: 32px; width: 100%; text-align:center;">Error loading order items</span>
+}
+<span style="width: 100%; text-align: center;">Total: @string.Format("{0:C}", Model.Order.Total)</span>
+</div>
+

@@ -2,20 +2,17 @@
 
 namespace HopperShopper.Entities
 {
-  public class ProductCategory
+  public class OrderContainsProducts
   {
     [Required]
     public int Id { get; set; }
 
-    [Key]
-    [Required]
-    public Guid ObjectID { get; set; }
+    //public Guid OrderObjectID { get; set; }
+    //public Order Order { get; set; }
 
-    [Required]
-    public string Name { get; set; }
-
-    public string Description { get; set; }
+    public List<Order> Orders { get; set; }
 
     public List<Product> Products { get; set; }
+
   }
 }

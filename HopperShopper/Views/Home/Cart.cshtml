@@ -1,1 +1,29 @@
-﻿
+﻿@model HopperShopper.Entities.Cart
+
+@{
+  ViewData["Title"] = "Your Cart";
+  Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="~/css/cart.min.css" />
+
+<div id="cart-container">
+<h1 id="cart-title">Your Cart</h1>
+<div id="back-button-container">
+  <a id="back-button" asp-action="Index" asp-controller="Home">< Back</a>
+</div>
+@if (Model.Products is not null)
+{
+  @foreach(var product in Model.Products)
+  {
+    <div class="cart-entry">
+    <a class="cart-entry-name" href="/Home/Products/@product.ObjectID">@product.Name</a>
+    <span class="product-price">@string.Format("{0:C}", product.Price)</span>
+    </div>    
+  }
+} 
+else
+{
+  <span style="color: red; font-size: 32px;">Error loading cart items</span>
+}
+</div>

@@ -8,6 +8,7 @@ body {
   padding: 0px;
   margin: 0px;
   background-color: #8ecae6;
+  overflow: hidden;
 }
 body header {
   width: 100%;

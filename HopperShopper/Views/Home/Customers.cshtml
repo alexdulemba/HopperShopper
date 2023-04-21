@@ -1,1 +1,24 @@
-﻿
+﻿@model HopperShopper.Entities.Customer
+
+@{
+  ViewData["Title"] = "Profile";
+  Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="~/css/customers.min.css" />
+
+
+<div id="profile-container">
+  <h1 id="profile-title">View your profile</h1>
+  <div id="back-button-container">
+    <a id="back-button" asp-controller="Home" asp-action="Index">< Home</a>
+  </div>
+  <h2>@Model.FirstName @Model.LastName</h2>
+
+  <h2>Username: @Model.Username</h2>
+
+  <h2>Password: ..........@Model.Password.Substring(10)</h2>
+  
+  @*<h3>Default Payment Method: @Model.PaymentMethods.Where(x => x.IsDefault).First().CreditCard.AccountNumber</h3>*@
+</div>
+

@@ -8,13 +8,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
+builder.Services.AddLogging();
+
 builder.Services.AddDbContext<HopperShopperContext>(options =>
 {
-  var folder = Environment.SpecialFolder.LocalApplicationData;
+  var folder = Environment.SpecialFolder.DesktopDirectory;
   var folderPath = Environment.GetFolderPath(folder);
   var path = Path.Join(folderPath, "hoppershopper.db");
 
-  options.UseSqlite(path);
+  options.UseSqlite($"Data Source={path}");
 
   Debug.WriteLine($"Creating SQLite db at: {path}");
 });
@@ -26,14 +28,16 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
   var services = scope.ServiceProvider;
+  var logger = services.GetRequiredService<ILogger<Program>>();
   try 
   {
     var dbContext = services.GetRequiredService<HopperShopperContext>();
-    //await DatabaseInitializer.InitializeAsync(dbContext);
+    await dbContext.Database.EnsureCreatedAsync();
+    await BogusDatabaseInitializer.InitializeAsync(dbContext);
+    logger.Log(LogLevel.Information, $"Created database with {dbContext.Products.Count()} products");
   }
   catch (Exception ex)
   {
-    var logger = services.GetRequiredService<ILogger>();
     logger.LogError(ex, "An error occurred when initializing the database");
   }
 }

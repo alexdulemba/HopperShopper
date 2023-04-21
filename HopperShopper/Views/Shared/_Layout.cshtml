@@ -13,15 +13,15 @@
         <a asp-controller="Home" asp-action="Index">Hopper Shopper</a>
       </div>
       <div id="header-search-container">
-        <input type="text" placeholder="Search products" />
-        <button type="submit">Search</button>
+@*        <input type="text" placeholder="Search products" />
+        <button type="submit">Search</button>*@
       </div>
       <div id="header-controls-container">
         <a id="header-orders" asp-controller="Home" asp-action="Orders">
           Orders
         </a>
         <a id="header-cart" asp-controller="Home" asp-action="Cart">
-          Cart
+          Cart (@ViewData["CartItemCount"])
         </a>
         <a id="header-profile" asp-controller="Home" asp-action="Customers">
           Profile

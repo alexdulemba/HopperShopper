@@ -1,1 +1,29 @@
-﻿
+﻿@model HopperShopper.Entities.Product
+
+@{
+  ViewData["Title"] = Model.Name;
+  Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="~/css/products.min.css" />
+
+<div id="product-information-container">
+  <h1 id="product-title">Product Information</h1>
+  <div id="back-button-container">
+    <a id="back-button" href="/Home/Index">< Back</a>
+  </div>
+  <form id="product-details-container" method="post">
+    <h1>Name: @Model.Name</h1>
+    <br />
+    <h4>Description:</h4>
+    <h3>@Model.Description</h3>
+    <br />
+    <h3>@string.Format("{0:C}", Model.Price)</h3>
+    <br />
+@*    <h3>Categories:</h3>
+    <h4>@string.Join(',', Model.Categories.Select(x => x?.Name ?? ""))</h4>
+    <hr />*@
+    <button type="submit" id="add-to-cart-btn" asp-controller="Home" asp-action="AddProductToCart">Add to Cart</button>
+  </form>
+
+</div>
