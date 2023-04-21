@@ -42,6 +42,21 @@ namespace HopperShopper.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    ObjectID = table.Column<Guid>(type: "TEXT", nullable: false),
+                    Id = table.Column<int>(type: "INTEGER", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Price = table.Column<float>(type: "REAL", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.ObjectID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Carts",
                 columns: table => new
                 {
@@ -112,8 +127,7 @@ namespace HopperShopper.Data.Migrations
                     ObjectID = table.Column<Guid>(type: "TEXT", nullable: false),
                     Id = table.Column<int>(type: "INTEGER", nullable: false),
                     IsDefault = table.Column<bool>(type: "INTEGER", nullable: false),
-                    CustomerObjectID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    PaymentID = table.Column<Guid>(type: "TEXT", nullable: false)
+                    CustomerObjectID = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -122,72 +136,6 @@ namespace HopperShopper.Data.Migrations
                         name: "FK_PaymentMethods_Customers_CustomerObjectID",
                         column: x => x.CustomerObjectID,
                         principalTable: "Customers",
-                        principalColumn: "ObjectID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Products",
-                columns: table => new
-                {
-                    ObjectID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Id = table.Column<int>(type: "INTEGER", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: false),
-                    Price = table.Column<float>(type: "REAL", nullable: false),
-                    CartObjectID = table.Column<Guid>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Products", x => x.ObjectID);
-                    table.ForeignKey(
-                        name: "FK_Products_Carts_CartObjectID",
-                        column: x => x.CartObjectID,
-                        principalTable: "Carts",
-                        principalColumn: "ObjectID");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "PaymentMethodsTypes",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Type = table.Column<string>(type: "TEXT", nullable: false),
-                    Description = table.Column<string>(type: "TEXT", nullable: false),
-                    PaymentMethodObjectID = table.Column<Guid>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_PaymentMethodsTypes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_PaymentMethodsTypes_PaymentMethods_PaymentMethodObjectID",
-                        column: x => x.PaymentMethodObjectID,
-                        principalTable: "PaymentMethods",
-                        principalColumn: "ObjectID",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OrderProduct",
-                columns: table => new
-                {
-                    OrdersObjectID = table.Column<Guid>(type: "TEXT", nullable: false),
-                    ProductsObjectID = table.Column<Guid>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderProduct", x => new { x.OrdersObjectID, x.ProductsObjectID });
-                    table.ForeignKey(
-                        name: "FK_OrderProduct_Orders_OrdersObjectID",
-                        column: x => x.OrdersObjectID,
-                        principalTable: "Orders",
-                        principalColumn: "ObjectID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_OrderProduct_Products_ProductsObjectID",
-                        column: x => x.ProductsObjectID,
-                        principalTable: "Products",
                         principalColumn: "ObjectID",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -217,6 +165,54 @@ namespace HopperShopper.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CartProduct",
+                columns: table => new
+                {
+                    CartsObjectID = table.Column<Guid>(type: "TEXT", nullable: false),
+                    ProductsObjectID = table.Column<Guid>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CartProduct", x => new { x.CartsObjectID, x.ProductsObjectID });
+                    table.ForeignKey(
+                        name: "FK_CartProduct_Carts_CartsObjectID",
+                        column: x => x.CartsObjectID,
+                        principalTable: "Carts",
+                        principalColumn: "ObjectID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CartProduct_Products_ProductsObjectID",
+                        column: x => x.ProductsObjectID,
+                        principalTable: "Products",
+                        principalColumn: "ObjectID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderProduct",
+                columns: table => new
+                {
+                    OrdersObjectID = table.Column<Guid>(type: "TEXT", nullable: false),
+                    ProductsObjectID = table.Column<Guid>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderProduct", x => new { x.OrdersObjectID, x.ProductsObjectID });
+                    table.ForeignKey(
+                        name: "FK_OrderProduct_Orders_OrdersObjectID",
+                        column: x => x.OrdersObjectID,
+                        principalTable: "Orders",
+                        principalColumn: "ObjectID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderProduct_Products_ProductsObjectID",
+                        column: x => x.ProductsObjectID,
+                        principalTable: "Products",
+                        principalColumn: "ObjectID",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "CreditCards",
                 columns: table => new
                 {
@@ -226,18 +222,11 @@ namespace HopperShopper.Data.Migrations
                     AccountNumber = table.Column<string>(type: "TEXT", nullable: false),
                     CCV = table.Column<string>(type: "TEXT", nullable: false),
                     ExpirationDate = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    PaymentMethodTypeId = table.Column<int>(type: "INTEGER", nullable: false),
                     PaymentMethodObjectID = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CreditCards", x => x.ObjectID);
-                    table.ForeignKey(
-                        name: "FK_CreditCards_PaymentMethodsTypes_PaymentMethodTypeId",
-                        column: x => x.PaymentMethodTypeId,
-                        principalTable: "PaymentMethodsTypes",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CreditCards_PaymentMethods_PaymentMethodObjectID",
                         column: x => x.PaymentMethodObjectID,
@@ -245,6 +234,11 @@ namespace HopperShopper.Data.Migrations
                         principalColumn: "ObjectID",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CartProduct_ProductsObjectID",
+                table: "CartProduct",
+                column: "ProductsObjectID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Carts_CustomerObjectID",
@@ -257,11 +251,6 @@ namespace HopperShopper.Data.Migrations
                 table: "CreditCards",
                 column: "PaymentMethodObjectID",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_CreditCards_PaymentMethodTypeId",
-                table: "CreditCards",
-                column: "PaymentMethodTypeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CustomerSearchHistory_CustomerObjectID",
@@ -284,25 +273,17 @@ namespace HopperShopper.Data.Migrations
                 column: "CustomerObjectID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PaymentMethodsTypes_PaymentMethodObjectID",
-                table: "PaymentMethodsTypes",
-                column: "PaymentMethodObjectID",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ProductProductCategory_ProductsObjectID",
                 table: "ProductProductCategory",
                 column: "ProductsObjectID");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Products_CartObjectID",
-                table: "Products",
-                column: "CartObjectID");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "CartProduct");
+
             migrationBuilder.DropTable(
                 name: "CreditCards");
 
@@ -316,7 +297,10 @@ namespace HopperShopper.Data.Migrations
                 name: "ProductProductCategory");
 
             migrationBuilder.DropTable(
-                name: "PaymentMethodsTypes");
+                name: "Carts");
+
+            migrationBuilder.DropTable(
+                name: "PaymentMethods");
 
             migrationBuilder.DropTable(
                 name: "Orders");
@@ -326,12 +310,6 @@ namespace HopperShopper.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Products");
-
-            migrationBuilder.DropTable(
-                name: "PaymentMethods");
-
-            migrationBuilder.DropTable(
-                name: "Carts");
 
             migrationBuilder.DropTable(
                 name: "Customers");

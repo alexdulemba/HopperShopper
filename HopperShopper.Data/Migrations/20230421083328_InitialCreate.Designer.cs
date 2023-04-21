@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HopperShopper.Data.Migrations
 {
     [DbContext(typeof(HopperShopperContext))]
-    [Migration("20230421023006_InitialCreate")]
+    [Migration("20230421083328_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -19,6 +19,21 @@ namespace HopperShopper.Data.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.5");
+
+            modelBuilder.Entity("CartProduct", b =>
+                {
+                    b.Property<Guid>("CartsObjectID")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("ProductsObjectID")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CartsObjectID", "ProductsObjectID");
+
+                    b.HasIndex("ProductsObjectID");
+
+                    b.ToTable("CartProduct");
+                });
 
             modelBuilder.Entity("HopperShopper.Entities.Cart", b =>
                 {
@@ -73,15 +88,10 @@ namespace HopperShopper.Data.Migrations
                     b.Property<Guid>("PaymentMethodObjectID")
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("PaymentMethodTypeId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("ObjectID");
 
                     b.HasIndex("PaymentMethodObjectID")
                         .IsUnique();
-
-                    b.HasIndex("PaymentMethodTypeId");
 
                     b.ToTable("CreditCards");
                 });
@@ -163,9 +173,6 @@ namespace HopperShopper.Data.Migrations
                     b.Property<bool>("IsDefault")
                         .HasColumnType("INTEGER");
 
-                    b.Property<Guid>("PaymentID")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("ObjectID");
 
                     b.HasIndex("CustomerObjectID");
@@ -173,38 +180,10 @@ namespace HopperShopper.Data.Migrations
                     b.ToTable("PaymentMethods");
                 });
 
-            modelBuilder.Entity("HopperShopper.Entities.PaymentMethodType", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid>("PaymentMethodObjectID")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Type")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PaymentMethodObjectID")
-                        .IsUnique();
-
-                    b.ToTable("PaymentMethodsTypes");
-                });
-
             modelBuilder.Entity("HopperShopper.Entities.Product", b =>
                 {
                     b.Property<Guid>("ObjectID")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("CartObjectID")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
@@ -222,8 +201,6 @@ namespace HopperShopper.Data.Migrations
                         .HasColumnType("REAL");
 
                     b.HasKey("ObjectID");
-
-                    b.HasIndex("CartObjectID");
 
                     b.ToTable("Products");
                 });
@@ -306,6 +283,21 @@ namespace HopperShopper.Data.Migrations
                     b.ToTable("ProductProductCategory");
                 });
 
+            modelBuilder.Entity("CartProduct", b =>
+                {
+                    b.HasOne("HopperShopper.Entities.Cart", null)
+                        .WithMany()
+                        .HasForeignKey("CartsObjectID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HopperShopper.Entities.Product", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsObjectID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("HopperShopper.Entities.Cart", b =>
                 {
                     b.HasOne("HopperShopper.Entities.Customer", "Customer")
@@ -325,15 +317,7 @@ namespace HopperShopper.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("HopperShopper.Entities.PaymentMethodType", "PaymentMethodType")
-                        .WithMany()
-                        .HasForeignKey("PaymentMethodTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("PaymentMethod");
-
-                    b.Navigation("PaymentMethodType");
                 });
 
             modelBuilder.Entity("HopperShopper.Entities.Order", b =>
@@ -356,24 +340,6 @@ namespace HopperShopper.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Customer");
-                });
-
-            modelBuilder.Entity("HopperShopper.Entities.PaymentMethodType", b =>
-                {
-                    b.HasOne("HopperShopper.Entities.PaymentMethod", "PaymentMethod")
-                        .WithOne("PaymentMethodType")
-                        .HasForeignKey("HopperShopper.Entities.PaymentMethodType", "PaymentMethodObjectID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("PaymentMethod");
-                });
-
-            modelBuilder.Entity("HopperShopper.Entities.Product", b =>
-                {
-                    b.HasOne("HopperShopper.Entities.Cart", null)
-                        .WithMany("Products")
-                        .HasForeignKey("CartObjectID");
                 });
 
             modelBuilder.Entity("HopperShopper.Entities.SearchHistoryEntry", b =>
@@ -417,11 +383,6 @@ namespace HopperShopper.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("HopperShopper.Entities.Cart", b =>
-                {
-                    b.Navigation("Products");
-                });
-
             modelBuilder.Entity("HopperShopper.Entities.Customer", b =>
                 {
                     b.Navigation("Cart")
@@ -437,9 +398,6 @@ namespace HopperShopper.Data.Migrations
             modelBuilder.Entity("HopperShopper.Entities.PaymentMethod", b =>
                 {
                     b.Navigation("CreditCard")
-                        .IsRequired();
-
-                    b.Navigation("PaymentMethodType")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618
