@@ -3,6 +3,7 @@ using System;
 using HopperShopper.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HopperShopper.Data.Migrations
 {
     [DbContext(typeof(HopperShopperContext))]
-    partial class HopperShopperContextModelSnapshot : ModelSnapshot
+    [Migration("20230421074909_NewMigration")]
+    partial class NewMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.5");
@@ -29,7 +32,7 @@ namespace HopperShopper.Data.Migrations
 
                     b.HasIndex("ProductsObjectID");
 
-                    b.ToTable("CartProduct", (string)null);
+                    b.ToTable("CartProduct");
                 });
 
             modelBuilder.Entity("HopperShopper.Entities.Cart", b =>
@@ -55,7 +58,7 @@ namespace HopperShopper.Data.Migrations
                     b.HasIndex("CustomerObjectID")
                         .IsUnique();
 
-                    b.ToTable("Carts", (string)null);
+                    b.ToTable("Carts");
                 });
 
             modelBuilder.Entity("HopperShopper.Entities.CreditCard", b =>
@@ -90,7 +93,7 @@ namespace HopperShopper.Data.Migrations
                     b.HasIndex("PaymentMethodObjectID")
                         .IsUnique();
 
-                    b.ToTable("CreditCards", (string)null);
+                    b.ToTable("CreditCards");
                 });
 
             modelBuilder.Entity("HopperShopper.Entities.Customer", b =>
@@ -124,7 +127,7 @@ namespace HopperShopper.Data.Migrations
 
                     b.HasKey("ObjectID");
 
-                    b.ToTable("Customers", (string)null);
+                    b.ToTable("Customers");
                 });
 
             modelBuilder.Entity("HopperShopper.Entities.Order", b =>
@@ -152,7 +155,7 @@ namespace HopperShopper.Data.Migrations
 
                     b.HasIndex("CustomerObjectID");
 
-                    b.ToTable("Orders", (string)null);
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("HopperShopper.Entities.PaymentMethod", b =>
@@ -174,7 +177,7 @@ namespace HopperShopper.Data.Migrations
 
                     b.HasIndex("CustomerObjectID");
 
-                    b.ToTable("PaymentMethods", (string)null);
+                    b.ToTable("PaymentMethods");
                 });
 
             modelBuilder.Entity("HopperShopper.Entities.Product", b =>
@@ -199,7 +202,7 @@ namespace HopperShopper.Data.Migrations
 
                     b.HasKey("ObjectID");
 
-                    b.ToTable("Products", (string)null);
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("HopperShopper.Entities.ProductCategory", b =>
@@ -221,7 +224,7 @@ namespace HopperShopper.Data.Migrations
 
                     b.HasKey("ObjectID");
 
-                    b.ToTable("ProductCategories", (string)null);
+                    b.ToTable("ProductCategories");
                 });
 
             modelBuilder.Entity("HopperShopper.Entities.SearchHistoryEntry", b =>
@@ -247,7 +250,7 @@ namespace HopperShopper.Data.Migrations
 
                     b.HasIndex("CustomerObjectID");
 
-                    b.ToTable("CustomerSearchHistory", (string)null);
+                    b.ToTable("CustomerSearchHistory");
                 });
 
             modelBuilder.Entity("OrderProduct", b =>
@@ -262,7 +265,7 @@ namespace HopperShopper.Data.Migrations
 
                     b.HasIndex("ProductsObjectID");
 
-                    b.ToTable("OrderProduct", (string)null);
+                    b.ToTable("OrderProduct");
                 });
 
             modelBuilder.Entity("ProductProductCategory", b =>
@@ -277,7 +280,7 @@ namespace HopperShopper.Data.Migrations
 
                     b.HasIndex("ProductsObjectID");
 
-                    b.ToTable("ProductProductCategory", (string)null);
+                    b.ToTable("ProductProductCategory");
                 });
 
             modelBuilder.Entity("CartProduct", b =>
