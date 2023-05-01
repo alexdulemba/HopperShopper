@@ -14,8 +14,7 @@ builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
   options.Cookie.Name = ".HopperShopper.LoginInformation";
-  //options.IdleTimeout = TimeSpan.FromMinutes(5);
-  options.IdleTimeout = TimeSpan.FromSeconds(30);
+  options.IdleTimeout = TimeSpan.FromMinutes(5);
   options.Cookie.IsEssential = true;
   options.Cookie.HttpOnly = true;
   options.Cookie.SecurePolicy = CookieSecurePolicy.Always;

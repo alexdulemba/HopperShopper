@@ -14,7 +14,7 @@ namespace HopperShopper.Web.Controllers
     private readonly HopperShopperContext _context;
     private readonly string _sessionKey = "LoginSessionKey";
     private readonly string _sessionValue = "LoginSessionValue1234";
-    private int _cartItemCount = 0;
+    private readonly string _sessionCartItemCount = "SessionCartItemCount";
 
     public HomeController(ILogger<HomeController> logger, HopperShopperContext context)
     {
@@ -26,8 +26,8 @@ namespace HopperShopper.Web.Controllers
     {
       if (IsLoggedIn())
       {
-        _cartItemCount = (await _context.Carts.FirstAsync()).ItemCount;
-        ViewData["CartItemCount"] = _cartItemCount;
+        SetCartItemCount((await _context.Carts.FirstAsync()).ItemCount);
+        ViewData["CartItemCount"] = GetCartItemCount();
         return View(new ProductsModel((products is null || products.Count() == 0) ? await _context.Products.ToListAsync() : products));
       }
       else 
@@ -69,7 +69,7 @@ namespace HopperShopper.Web.Controllers
     [Route("/Home/Products/{productObjectID}")]
     public async Task<IActionResult> Products([FromRoute] Guid productObjectID)
     {
-      ViewData["CartItemCount"] = _cartItemCount;
+      ViewData["CartItemCount"] = GetCartItemCount();
       try
       {
         var product = await _context.Products.SingleAsync(x => x.ObjectID.Equals(productObjectID));
@@ -92,18 +92,20 @@ namespace HopperShopper.Web.Controllers
       currentCart.ItemCount++;
       await _context.SaveChangesAsync();
 
+      SetCartItemCount(currentCart.ItemCount);
+
       return RedirectToAction("Index"); 
     }
 
     [HttpPost]
     [Route("/Home/Search")]
-    public IActionResult Search(string content)
+    public async Task<IActionResult> Search(string content)
     {
       try 
       {
         var searcher = SearchFactory.GetSearcher(content ?? string.Empty);
         var products = searcher.Find(_context);
-        ViewData["CartItemCount"] = _cartItemCount;
+        ViewData["CartItemCount"] = GetCartItemCount();
         return View("Index", new ProductsModel(products));
       } 
       catch (Exception ex)
@@ -117,7 +119,7 @@ namespace HopperShopper.Web.Controllers
     [Route("/Home/Customers/")]
     public async Task<IActionResult> Customers()
     {
-      ViewData["CartItemCount"] = _cartItemCount;
+      ViewData["CartItemCount"] = GetCartItemCount();
       var customer = (await _context.Customers.ToListAsync()).First();
       return View(customer);
     }
@@ -125,7 +127,7 @@ namespace HopperShopper.Web.Controllers
     [HttpGet]
     public async Task<IActionResult> Cart()
     {
-      ViewData["CartItemCount"] = _cartItemCount;
+      ViewData["CartItemCount"] = GetCartItemCount();
       var cart = (await _context.Carts.Include(c => c.Products).ToListAsync()).First();
       return View(cart);
     }
@@ -133,7 +135,7 @@ namespace HopperShopper.Web.Controllers
     [HttpGet]
     public async Task<IActionResult> Orders()
     {
-      ViewData["CartItemCount"] = (await _context.Carts.FirstAsync()).ItemCount;
+      ViewData["CartItemCount"] = GetCartItemCount();
       var orders = await _context.Orders.ToListAsync();
       return View(new OrdersModel(orders)); 
     }
@@ -142,10 +144,21 @@ namespace HopperShopper.Web.Controllers
     [Route("/Home/Orders/{orderObjectID}")]
     public async Task<IActionResult> Order([FromRoute] Guid orderObjectID)
     {
-      ViewData["CartItemCount"] = (await _context.Carts.FirstAsync()).ItemCount;
+      ViewData["CartItemCount"] = GetCartItemCount();
       var order = (await _context.Orders.Include(o => o.Products).ToListAsync()).Single(x => x.ObjectID.Equals(orderObjectID));
       return View(new OrderModel(order.Products, order));
     }
+
+    private int GetCartItemCount()
+    {
+      return HttpContext.Session.GetInt32(_sessionCartItemCount) ?? -1;
+    }
+
+    private void SetCartItemCount(int value)
+    {
+      HttpContext.Session.SetInt32(_sessionCartItemCount, value);
+    }
+
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

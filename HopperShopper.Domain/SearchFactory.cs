@@ -20,7 +20,7 @@ namespace HopperShopper.Domain
         }
       };
 
-      return new DefaultSearch();
+      return new DefaultSearch(content);
     }
   }
 }

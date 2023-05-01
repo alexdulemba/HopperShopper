@@ -8,6 +8,13 @@ namespace HopperShopper.Domain
     private static string _searchAttribute = "name";
     private string Text { get; set; } = string.Empty;
 
+    public DefaultSearch() { }  
+
+    public DefaultSearch(string content) 
+    {
+      Text = content.ToLower().Trim();
+    }
+
     public bool Wants(string content)
     {
       if (content.ToLower().Contains(_searchAttribute)) 
