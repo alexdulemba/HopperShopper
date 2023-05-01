@@ -10,6 +10,17 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddLogging();
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options =>
+{
+  options.Cookie.Name = ".HopperShopper.LoginInformation";
+  //options.IdleTimeout = TimeSpan.FromMinutes(5);
+  options.IdleTimeout = TimeSpan.FromSeconds(30);
+  options.Cookie.IsEssential = true;
+  options.Cookie.HttpOnly = true;
+  options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+});
+
 builder.Services.AddDbContext<HopperShopperContext>(options =>
 {
   var folder = Environment.SpecialFolder.DesktopDirectory;
@@ -62,6 +73,8 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

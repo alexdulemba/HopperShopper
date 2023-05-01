@@ -13,6 +13,7 @@
     <a id="back-button" href="/Home/Index">< Back</a>
   </div>
   <form id="product-details-container" method="post">
+    @Html.HiddenFor(o => o.ObjectID)
     <h1>Name: @Model.Name</h1>
     <br />
     <h4>Description:</h4>

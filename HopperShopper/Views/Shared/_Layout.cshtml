@@ -12,10 +12,10 @@
       <div id="header-title-container">
         <a asp-controller="Home" asp-action="Index">Hopper Shopper</a>
       </div>
-      <div id="header-search-container">
-@*        <input type="text" placeholder="Search products" />
-        <button type="submit">Search</button>*@
-      </div>
+      <form id="header-search-container" method="post">
+        <input type="text" placeholder="Search products" id="search-box" name="content"/>
+        <button type="submit" asp-action="Search" asp-controller="Home">Search</button>
+      </form>
       <div id="header-controls-container">
         <a id="header-orders" asp-controller="Home" asp-action="Orders">
           Orders

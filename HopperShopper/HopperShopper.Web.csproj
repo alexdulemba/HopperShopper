@@ -32,8 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HopperShopper.Data\HopperShopper.Data.csproj" />
-    <ProjectReference Include="..\HopperShopper.Entities\HopperShopper.Entities.csproj" />
+    <ProjectReference Include="..\HopperShopper.Domain\HopperShopper.Domain.csproj" />
   </ItemGroup>
 
 </Project>

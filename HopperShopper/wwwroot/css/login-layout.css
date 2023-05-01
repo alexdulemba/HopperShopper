@@ -1,0 +1,100 @@
+﻿body {
+  width: 100vw;
+  height: 100vh;
+  padding: 0px;
+  margin: 0px;
+  background-color: #8ecae6;
+  overflow: hidden;
+}
+body header {
+  width: 100%;
+  height: 72px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #023047;
+}
+body header nav {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body header nav #header-title-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+body header nav #header-title-container > span {
+  color: #ffb703;
+  text-decoration: none;
+  font-size: 32px;
+  margin-left: 16px;
+}
+body main {
+  width: calc(100% - 32px);
+  height: calc(100% - 104px);
+  padding: 16px;
+  margin: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+body main #login-container {
+  width: 40%;
+  height: 60%;
+  border: 4px solid #023047;
+  border-radius: 12px;
+  background-color: #219ebc;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap: wrap;
+}
+body main #login-container > span {
+  font-size: 2.4rem;
+  font-weight: 600;
+}
+body main #login-container > form {
+  width: 100%;
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+}
+body main #login-container > form > input {
+  width: 80%;
+  height: 40px;
+  font-size: 24px;
+  background-color: #8ecae6;
+  border: 2px solid #219ebc;
+  border-radius: 4px;
+  outline: none;
+}
+body main #login-container > form > input::placeholder {
+  color: #023047;
+}
+body main #login-container > form > input:focus {
+  border-color: #fb8500;
+}
+body main #login-container > form > button {
+  width: 200px;
+  height: 60px;
+  background-color: #ffb703;
+  border: 2px solid #fb8500;
+  border-radius: 4px;
+  color: #023047;
+  font-size: 16px;
+  font-weight: 600;
+}
+body main #login-container > form > button:hover {
+  cursor: pointer;
+}
+body main #login-container > form > button:active {
+  background-color: #fb8500;
+}

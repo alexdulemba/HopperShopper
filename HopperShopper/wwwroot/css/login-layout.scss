@@ -1,9 +1,5 @@
 ﻿@import 'theme.scss';
 
-:root {
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-
 body {
   width: 100vw;
   height: 100vh;
@@ -28,29 +24,59 @@ body {
       align-items: center;
 
       #header-title-container {
-        width: 15%;
+        width: 100%;
         height: 100%;
         display: flex;
         justify-content: flex-start;
         align-items: center;
 
-        > a {
+        > span {
           color: $yellow;
           text-decoration: none;
           font-size: 32px;
           margin-left: 16px;
         }
       }
+    }
+  }
 
-      #header-search-container {
-        width: 70%;
-        height: 100%;
+  main {
+    width: calc(100% - 32px);
+    height: calc(100% - 104px);
+    padding: 16px;
+    margin: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    #login-container {
+      width: 40%;
+      height: 60%;
+      border: 4px solid $navy-blue;
+      border-radius: 12px;
+      background-color: $dark-blue;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      flex-wrap: wrap;
+
+      > span {
+        font-size: 2.4rem;
+        font-weight: 600;
+      }
+
+      > form {
+        width: 100%;
+        height: 70%;
         display: flex;
-        justify-content: center;
+        flex-direction: column;
+        justify-content: space-around;
         align-items: center;
 
+
         > input {
-          width: 65%;
+          width: 80%;
           height: 40px;
           font-size: 24px;
           background-color: $light-blue;
@@ -68,9 +94,8 @@ body {
         }
 
         > button {
-          margin-left: 4px;
-          height: 44px;
-          width: 72px;
+          width: 200px;
+          height: 60px;
           background-color: $yellow;
           border: 2px solid $orange;
           border-radius: 4px;
@@ -87,32 +112,6 @@ body {
           }
         }
       }
-
-      #header-controls-container {
-        width: 15%;
-        height: 100%;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-
-        > a {
-          font-size: 20px;
-          color: $yellow;
-          text-decoration: none;
-          margin-right: 16px;
-          
-          &:hover {
-            text-decoration: underline;
-          }
-        }
-      }
     }
-  }
-
-  main {
-    width: calc(100% - 32px);
-    height: calc(100% - 104px);
-    padding: 16px;
-    margin: 0px;
   }
 }

@@ -1,0 +1,15 @@
+﻿@model HopperShopper.Web.Models.LoginModel
+@{
+  Layout = "_LoginLayout";
+}
+
+<link rel="stylesheet" href="~/css/login-layout.min.css" asp-append-version="true" />
+
+<div id="login-container">
+  <span>Log in to your account</span>
+  <form method="post">
+    @Html.TextBoxFor(model => model.Username, new { placeholder = "Username" })
+    @Html.TextBoxFor(model => model.Password, new { placeholder = "Password", type = "password" })
+    <button type="submit" asp-action="Login" asp-controller="Home">Login</button>
+  </form>
+</div>

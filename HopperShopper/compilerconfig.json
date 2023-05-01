@@ -26,5 +26,9 @@
   {
     "outputFile": "wwwroot/css/products.css",
     "inputFile": "wwwroot/css/products.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/login-layout.css",
+    "inputFile": "wwwroot/css/login-layout.scss"
   }
 ]
