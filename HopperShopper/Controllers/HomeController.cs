@@ -125,8 +125,8 @@ namespace HopperShopper.Web.Controllers
     [HttpGet]
     public async Task<IActionResult> Cart()
     {
-      ViewData["CartItemCount"] = (await _context.Carts.FirstAsync()).ItemCount;
-      var cart = (await _context.Carts.ToListAsync()).First();
+      ViewData["CartItemCount"] = _cartItemCount;
+      var cart = (await _context.Carts.Include(c => c.Products).ToListAsync()).First();
       return View(cart);
     }
 
@@ -143,7 +143,7 @@ namespace HopperShopper.Web.Controllers
     public async Task<IActionResult> Order([FromRoute] Guid orderObjectID)
     {
       ViewData["CartItemCount"] = (await _context.Carts.FirstAsync()).ItemCount;
-      var order = (await _context.Orders.ToListAsync()).Where(x => x.ObjectID.Equals(orderObjectID)).First();
+      var order = (await _context.Orders.Include(o => o.Products).ToListAsync()).Single(x => x.ObjectID.Equals(orderObjectID));
       return View(new OrderModel(order.Products, order));
     }
 
