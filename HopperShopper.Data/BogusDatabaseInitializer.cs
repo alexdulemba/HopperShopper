@@ -1,48 +1,62 @@
 ﻿using Bogus;
 using HopperShopper.Entities;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 
 namespace HopperShopper.Data
 {
   public static class BogusDatabaseInitializer
   {
-    public static async Task InitializeAsync(HopperShopperContext context)
+    public static async Task InitializeAsync(HopperShopperContext context, bool deleteAndRegenerate)
     {
-      if (context.Products.Any()) return;
+      if (deleteAndRegenerate) {
+        context.Customers.RemoveRange(context.Customers);
+        context.PaymentMethods.RemoveRange(context.PaymentMethods);
+        context.CreditCards.RemoveRange(context.CreditCards);
+        context.CustomerSearchHistory.RemoveRange(context.CustomerSearchHistory);
+        context.ProductCategories.RemoveRange(context.ProductCategories);
+        context.Products.RemoveRange(context.Products);
+        context.Carts.RemoveRange(context.Carts);
+        context.Orders.RemoveRange(context.Orders);
+        await context.SaveChangesAsync();
+
+        Debug.WriteLine("Removed all previous DB table entries");
+      }
 
       //var paymentMethodTypes = CreatePaymentMethodTypes();
       //await context.AddRangeAsync(paymentMethodTypes);
 
       var customers = CreateCustomers();
       await context.AddRangeAsync(customers);
-      await context.SaveChangesAsync();
+      //await context.SaveChangesAsync();
 
       var paymentMethods = CreatePaymentMethods(customers.First());
       await context.AddRangeAsync(paymentMethods);
-      await context.SaveChangesAsync();
+      //await context.SaveChangesAsync();
 
       var creditCards = CreateCreditCards(paymentMethods, customers.First().FirstName);
       await context.AddRangeAsync(creditCards);
-      await context.SaveChangesAsync();
+      //await context.SaveChangesAsync();
 
       var searchHistory = CreateSearchHistory(customers.First());
       await context.AddRangeAsync(searchHistory);
-      await context.SaveChangesAsync();
+      //await context.SaveChangesAsync();
 
       var productCategories = CreateProductCategories();
       await context.AddRangeAsync(productCategories);
-      await context.SaveChangesAsync();
+      //await context.SaveChangesAsync();
 
       var products = CreateProducts(productCategories);
       await context.AddRangeAsync(products);
-      await context.SaveChangesAsync();
+      //await context.SaveChangesAsync();
 
       var cart = CreateCart(customers.First(), products);
       await context.AddRangeAsync(cart);
-      await context.SaveChangesAsync();
+      //await context.SaveChangesAsync();
 
       var orders = CreateOrders(customers.First(), products);
       await context.AddRangeAsync(orders);
+
       await context.SaveChangesAsync();
     }
 
@@ -118,10 +132,10 @@ namespace HopperShopper.Data
       var faker = new Faker<ProductCategory>()
           .RuleFor(x => x.Id, f => f.IndexFaker)
           .RuleFor(x => x.ObjectID, new Guid())
-          .RuleFor(x => x.Name, f => f.Commerce.Categories(1).FirstOrDefault())
+          .RuleFor(x => x.Name, f => f.Commerce.Categories(5).FirstOrDefault())
           .RuleFor(x => x.Description, string.Empty);
 
-      return faker.Generate(20);
+      return faker.Generate(10);
     }
 
     private static List<Product> CreateProducts(List<ProductCategory> categories)
@@ -132,7 +146,7 @@ namespace HopperShopper.Data
         .RuleFor(x => x.ObjectID, new Guid())
         .RuleFor(x => x.Name, f => f.Commerce.ProductName())
         .RuleFor(x => x.Description, f => f.Commerce.ProductDescription())
-        .RuleFor(x => x.Price, f => (float)f.Finance.Amount())
+        .RuleFor(x => x.Price, f => (float)f.Finance.Amount(min: 5, max: 200))
         .RuleFor(x => x.Categories, categories.Where(x => x.Id < random.Next(20)).ToList());
       
       return faker.Generate(20);
@@ -142,6 +156,8 @@ namespace HopperShopper.Data
     {
       var random = new Random();
       var cartProducts = products.Where(x => x.Id < random.Next(20));
+      Debug.WriteLine($"Cart Product Count: {cartProducts.Count()}");
+      Debug.WriteLine($"Cart Subtotal: ${cartProducts.Sum(p => p.Price)}");
 
       return new List<Cart>()
       {
@@ -149,7 +165,6 @@ namespace HopperShopper.Data
         {
           Id = 1,
           ObjectID = new Guid(),
-          ItemCount = cartProducts.Count(),
           Subtotal = cartProducts.Sum(x => x.Price),
           CustomerObjectID = customer.ObjectID,
           Products = cartProducts.ToList()
@@ -171,6 +186,7 @@ namespace HopperShopper.Data
           ItemCount = orderProducts.Count(),
           Total = orderProducts.Sum(x => x.Price),
           CustomerObjectID = customer.ObjectID,
+          DatePlaced = DateTime.UtcNow,
           Products = orderProducts.ToList()
         }
       };

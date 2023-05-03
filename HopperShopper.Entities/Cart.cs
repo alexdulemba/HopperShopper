@@ -13,9 +13,6 @@ namespace HopperShopper.Entities
     public Guid ObjectID { get; set; }
 
     [Required]
-    public int ItemCount { get; set; }
-
-    [Required]
     public float Subtotal { get; set; }
 
     [ForeignKey("ObjectID")]

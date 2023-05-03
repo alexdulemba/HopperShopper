@@ -34,5 +34,13 @@ namespace HopperShopper.Entities
     public List<PaymentMethod> PaymentMethods { get; set; }
 
     public List<SearchHistoryEntry> SearchHistoryEntries { get; set; }
+
+    public void UpdateFrom(Customer customer)
+    {
+      this.FirstName = customer.FirstName;
+      this.LastName = customer.LastName;
+      this.Username = customer.Username;
+      this.Password = customer.Password;
+    }
   }
 }

@@ -84,7 +84,7 @@ namespace HopperShopper.Data
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
       base.OnConfiguring(optionsBuilder);
-      optionsBuilder.EnableSensitiveDataLogging(true);
+      optionsBuilder.EnableSensitiveDataLogging(false);
       //optionsBuilder.UseSqlite($"Data Source={DbPath}");
     }
   }

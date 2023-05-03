@@ -1,5 +1,6 @@
 ﻿using HopperShopper.Data;
 using HopperShopper.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace HopperShopper.Domain
 {
@@ -26,14 +27,14 @@ namespace HopperShopper.Domain
       return false;
     }
 
-    public List<Product> Find(HopperShopperContext context)
+    public async Task<List<Product>> FindAsync(HopperShopperContext context)
     {
       if (Text != string.Empty) 
       {
-        return context.Products.Where(p => p.Name.ToLower().Contains(Text)).ToList();
+        return await context.Products.Where(p => p.Name.ToLower().Contains(Text)).ToListAsync();
       }
 
-      return context.Products.ToList();
+      return await context.Products.ToListAsync();
     }
   }
 }

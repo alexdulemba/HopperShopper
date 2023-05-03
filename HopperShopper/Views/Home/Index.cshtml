@@ -9,13 +9,23 @@
 
 
 <h1>Check out our products!</h1>
-<div class="product-listing-container">
-@foreach(var product in Model.Products)
-{
-  <div class="product-listing">
-    <a class="product-name" href="/Home/Products/@product.ObjectID">@product.Name</a>
-    <span class="product-price">@string.Format("{0:C}", product.Price)</span>
+<div class="main-content-container">
+  <div class="side-menu">
+    <div class="hint">
+      <span class="hint-title">Hint!</span>
+      <span class="hint-content">You can search products by category by typing "category" before the category name in the search bar!</span>
+    </div>
   </div>
-}
+  <div class="product-listing-container">
+    @foreach (var product in Model.Products)
+    {
+      <div class="product-listing">
+        <a class="product-name" href="/Home/Products/@product.ObjectID">@product.Name</a>
+        <span class="product-categories">@string.Join(", ", product.Categories.Select(x => x?.Name ?? ""))</span>
+        <span class="product-price">@string.Format("{0:C}", product.Price)</span>
+      </div>
+    }
+  </div>
 </div>
+
 

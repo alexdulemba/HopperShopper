@@ -7,6 +7,6 @@ namespace HopperShopper.Domain
   {
     bool Wants(string content);
 
-    List<Product> Find(HopperShopperContext content);
+    Task<List<Product>> FindAsync(HopperShopperContext content);
   }
 }

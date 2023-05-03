@@ -21,9 +21,9 @@
     <br />
     <h3>@string.Format("{0:C}", Model.Price)</h3>
     <br />
-@*    <h3>Categories:</h3>
-    <h4>@string.Join(',', Model.Categories.Select(x => x?.Name ?? ""))</h4>
-    <hr />*@
+    <h3>Categories:</h3>
+    <h4>@string.Join(", ", Model.Categories.Select(x => x?.Name ?? ""))</h4>
+    <hr />
     <button type="submit" id="add-to-cart-btn" asp-controller="Home" asp-action="AddProductToCart">Add to Cart</button>
   </form>
 

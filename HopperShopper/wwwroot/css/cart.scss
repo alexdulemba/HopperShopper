@@ -4,25 +4,24 @@ $navy-blue: #023047;
 $yellow: #ffb703;
 $orange: #fb8500;
 
-#cart-container {
+#main-content-container {
   width: 100%;
-  height: 720px;
+  height: 92%;
   display: flex;
+  justify-content: flex-start;
+  align-items: center;
   flex-wrap: wrap;
-  justify-content: center;
-  align-content: flex-start;
-  overflow-y: auto;
 
   #cart-title {
-    width: 90%;
+    width: 50%;
     height: 40px;
   }
 
   #back-button-container {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
-    width: 10%;
+    width: 50%;
     height: 40px;
     margin-top: 1em;
 
@@ -31,25 +30,104 @@ $orange: #fb8500;
     }
   }
 
-  .cart-entry {
-    width: 100%;
-    height: 60px;
-    background-color: $dark-blue;
-    border-bottom: 1px solid $navy-blue;
+  .side-menu {
+    width: 24%;
+    height: calc(100% - 40px);
     display: flex;
-    justify-content: space-around;
-    align-items: center;
+    justify-content: flex-start;
+    align-content: flex-start;
+    background-color: $navy-blue;
+    color: $orange;
+    flex-wrap: wrap;
+    border-radius: 8px 0 0 8px;
 
-    .cart-entry-name {
-      margin-left: 16px;
-      font-weight: 500;
-      font-size: 18px;
-      color: $navy-blue;
-      text-decoration: none;
+    > span {
+      margin: 16px 0 0 16px;
+      font-size: 2.2rem;
+
+      &:nth-of-type(2) {
+        font-size: 1.6rem;
+      }
+    }
+  }
+
+  #cart-container {
+    width: 76%;
+    height: calc(100% - 40px);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+    overflow-y: auto;
+    border-radius: 0 8px 8px 0;
+    background-color: $dark-blue;
+
+    &::-webkit-scrollbar {
+      width: 12px;
     }
 
-    .product-price {
-      font-size: 20px;
+    &::-webkit-scrollbar-track {
+      background-color: $navy-blue;
+      border-radius: 0px 8px 8px 0px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: $orange;
+      border-radius: 8px;
+      transition: 0.3s ease all;
+
+      &:hover {
+        border: 1px solid $navy-blue;
+      }
+    }
+
+    .cart-entry {
+      width: 100%;
+      height: 60px;
+      background-color: $dark-blue;
+      border-bottom: 1px solid $navy-blue;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+
+      .cart-entry-name {
+        margin-left: 16px;
+        font-weight: 500;
+        font-size: 18px;
+        color: $navy-blue;
+        text-decoration: none;
+        flex: 2;
+      }
+
+      .product-price {
+        font-size: 20px;
+        flex: 1;
+      }
+
+      > form {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        > .remove-btn {
+          background-color: inherit;
+          border: none;
+          color: $navy-blue;
+          height: 32px;
+          text-decoration: none;
+          text-align: center;
+          vertical-align: central;
+          border-radius: 8px;
+
+          &:hover {
+            cursor: pointer;
+            border: 4px solid red;
+            font-weight: 600;
+          }
+        }
+      }
     }
   }
 }
+

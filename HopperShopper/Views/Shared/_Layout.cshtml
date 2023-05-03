@@ -17,15 +17,9 @@
         <button type="submit" asp-action="Search" asp-controller="Home">Search</button>
       </form>
       <div id="header-controls-container">
-        <a id="header-orders" asp-controller="Home" asp-action="Orders">
-          Orders
-        </a>
-        <a id="header-cart" asp-controller="Home" asp-action="Cart">
-          Cart (@ViewData["CartItemCount"])
-        </a>
-        <a id="header-profile" asp-controller="Home" asp-action="Customers">
-          Profile
-        </a>
+        <a id="header-orders" asp-controller="Home" asp-action="Orders">Orders</a>
+        <a id="header-cart" asp-controller="Home" asp-action="Cart">Cart (@ViewData["CartItemCount"])</a>
+        <a id="header-profile" asp-controller="Home" asp-action="Customers">Profile</a>
       </div>
     </nav>
   </header>

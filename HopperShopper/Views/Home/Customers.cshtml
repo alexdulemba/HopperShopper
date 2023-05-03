@@ -6,19 +6,45 @@
 }
 
 <link rel="stylesheet" href="~/css/customers.min.css" />
+<script>
+  function showPassword() {
+    let passwordInput = document.getElementById("password-input");
 
+    if (passwordInput.type === "password") {
+      passwordInput.type = "text";
+    } else {
+      passwordInput.type = "password";
+    }
+  }
+</script>
 
 <div id="profile-container">
-  <h1 id="profile-title">View your profile</h1>
+  <h1 id="profile-title">Edit your profile</h1>
   <div id="back-button-container">
     <a id="back-button" asp-controller="Home" asp-action="Index">< Home</a>
   </div>
-  <h2>@Model.FirstName @Model.LastName</h2>
+  <form method="post">
+    @Html.HiddenFor(model => model.ObjectID)
+    <div class="customer-attribute">
+      <label for="first-name-input">First Name</label>
+      @Html.TextBoxFor(model => model.FirstName, new { id = "first-name-input" })
+    </div>
+    <div class="customer-attribute">
+      <label for="last-name-input">Last Name</label>
+      @Html.TextBoxFor(model => model.LastName, new { id = "last-name-input" })
+    </div>
+    <div class="customer-attribute">
+      <label for="username-input">User Name</label>
+      @Html.TextBoxFor(model => model.Username, new { id = "username-input" })
+    </div>
+    <div class="customer-attribute">
+      <label for="password-input">Password</label>
+      @Html.TextBoxFor(model => model.Password, new { id = "password-input", type = "password" })
+      <input type="checkbox" onClick="showPassword()" />Show Password
+    </div>
+    <button type="submit" asp-action="Customers" asp-controller="Home">Save Changes</button>
+  </form>
 
-  <h2>Username: @Model.Username</h2>
-
-  <h2>Password: ..........@Model.Password.Substring(10)</h2>
-  
   @*<h3>Default Payment Method: @Model.PaymentMethods.Where(x => x.IsDefault).First().CreditCard.AccountNumber</h3>*@
 </div>
 

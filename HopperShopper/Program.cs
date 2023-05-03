@@ -14,7 +14,7 @@ builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
   options.Cookie.Name = ".HopperShopper.LoginInformation";
-  options.IdleTimeout = TimeSpan.FromMinutes(5);
+  options.IdleTimeout = TimeSpan.FromMinutes(30);
   options.Cookie.IsEssential = true;
   options.Cookie.HttpOnly = true;
   options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
@@ -43,7 +43,7 @@ using (var scope = app.Services.CreateScope())
   {
     var dbContext = services.GetRequiredService<HopperShopperContext>();
     await dbContext.Database.EnsureCreatedAsync();
-    await BogusDatabaseInitializer.InitializeAsync(dbContext);
+    await BogusDatabaseInitializer.InitializeAsync(dbContext, true);
     logger.Log(LogLevel.Information, $"Created database with {dbContext.Products.Count()} products");
   }
   catch (Exception ex)

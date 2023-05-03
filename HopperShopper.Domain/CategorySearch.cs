@@ -20,11 +20,11 @@ namespace HopperShopper.Domain
       return false;
     }
 
-    public List<Product> Find(HopperShopperContext context)
+    public async Task<List<Product>> FindAsync(HopperShopperContext context)
     {
-      return context.Products.Include(p => p.Categories)
+      return await context.Products.Include(p => p.Categories)
                              .Where(p => p.Categories.Any(c => c.Name.ToLower().Contains(Text)))
-                             .ToList();
+                             .ToListAsync();
     }
   }
 }

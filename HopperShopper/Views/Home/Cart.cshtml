@@ -7,23 +7,34 @@
 
 <link rel="stylesheet" href="~/css/cart.min.css" />
 
-<div id="cart-container">
-<h1 id="cart-title">Your Cart</h1>
-<div id="back-button-container">
-  <a id="back-button" asp-action="Index" asp-controller="Home">< Back</a>
-</div>
-@if (Model.Products is not null)
-{
-  @foreach(var product in Model.Products)
-  {
-    <div class="cart-entry">
-    <a class="cart-entry-name" href="/Home/Products/@product.ObjectID">@product.Name</a>
-    <span class="product-price">@string.Format("{0:C}", product.Price)</span>
-    </div>    
-  }
-} 
-else
-{
-  <span style="color: red; font-size: 32px;">Error loading cart items</span>
-}
+<div id="main-content-container">
+  <h1 id="cart-title">Your Cart</h1>
+  <div id="back-button-container">
+    <a id="back-button" asp-action="Index" asp-controller="Home">< Back</a>
+  </div>
+  <div class="side-menu">
+    <span>Subtotal: $@Model.Products.Sum(p => p.Price)</span>
+    <span>Item Count: @Model.Products.Count()</span>
+  </div>
+  <div id="cart-container">
+    @if (Model.Products is not null)
+    {
+      @foreach (var product in Model.Products)
+      {
+        <div class="cart-entry">
+          <a class="cart-entry-name" href="/Home/Products/@product.ObjectID">@product.Name</a>
+          <span class="product-price">@string.Format("{0:C}", product.Price)</span>
+          @*<a class="remove-btn" href="/Home/RemoveProductFromCart/@product.ObjectID">Remove</a>*@
+          <form method="post">  
+            <input type="hidden" value="@product.ObjectID" name="ObjectID"/>
+            <button type="submit" asp-controller="Home" asp-action="RemoveProductFromCart" class="remove-btn">Remove</button>
+          </form>
+        </div>
+      }
+    }
+    else
+    {
+      <span style="color: red; font-size: 32px;">Error loading cart items</span>
+    }
+  </div>
 </div>
