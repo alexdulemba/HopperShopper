@@ -63,7 +63,7 @@ namespace HopperShopper.Web.Controllers
       }
       else
       {
-        return Error();
+        return Login();
       }
     }
 
@@ -157,6 +157,30 @@ namespace HopperShopper.Web.Controllers
       ViewData["CartItemCount"] = GetCartItemCount();
       var cart = (await _context.Carts.Include(c => c.Products).ToListAsync()).First();
       return View(cart);
+    }
+
+    [HttpPost]
+    [Route("/Home/Checkout")]
+    public async Task<IActionResult> Checkout([FromForm] Guid objectId)
+    {
+      var cart = await _context.Carts.Include(c => c.Products).Include(c => c.Customer).SingleAsync(c => c.ObjectID.Equals(objectId));
+      var order = new Order()
+      {
+        Id = await _context.Orders.CountAsync() + 1,
+        ObjectID = Guid.NewGuid(),
+        Products = new List<Product>(cart.Products),
+        ItemCount = cart.Products.Count(),
+        Total = cart.Products.Sum(p => p.Price),
+        DatePlaced = DateTime.UtcNow,
+        Customer = cart.Customer,
+        CustomerObjectID = cart.CustomerObjectID,
+      };
+
+      await _context.Orders.AddAsync(order);
+      cart.Products.RemoveAll((p) => true);
+      await _context.SaveChangesAsync();
+
+      return RedirectToAction("Index");
     }
 
     [HttpGet]

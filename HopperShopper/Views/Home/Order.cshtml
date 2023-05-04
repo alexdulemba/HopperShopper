@@ -11,7 +11,7 @@
 <div class="product-listing-container">
   <h1 id="title">Order #@Model.Order.Id</h1>
   <div id="back-button-container">
-    <a id="back-button" asp-action="Index" asp-controller="Home">< Back</a>
+    <a id="back-button" asp-action="Orders" asp-controller="Home">< Back</a>
   </div>
 @if (Model.Products is not null)
 {
@@ -27,6 +27,6 @@ else
 {
   <span style="color: red; font-size: 32px; width: 100%; text-align:center;">Error loading order items</span>
 }
-<span style="width: 100%; text-align: center;">Total: @string.Format("{0:C}", Model.Order.Total)</span>
+  <span id="order-total">Total: @string.Format("{0:C}", Model.Order.Total)</span>
 </div>
 

@@ -38,6 +38,34 @@
 }
 #main-content-container .side-menu > span:nth-of-type(2) {
   font-size: 1.6rem;
+  width: 95%;
+}
+#main-content-container .side-menu > form {
+  margin-top: 10%;
+  width: 100%;
+  height: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#main-content-container .side-menu > form > button {
+  background-color: #ffb703;
+  border: 2px solid #fb8500;
+  color: #023047;
+  height: 72px;
+  width: 172px;
+  text-decoration: none;
+  text-align: center;
+  vertical-align: central;
+  border-radius: 8px;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+#main-content-container .side-menu > form > button:hover {
+  cursor: pointer;
+}
+#main-content-container .side-menu > form > button:active {
+  background-color: #fb8500;
 }
 #main-content-container #cart-container {
   width: 76%;

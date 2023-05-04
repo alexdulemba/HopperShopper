@@ -13,8 +13,12 @@
     <a id="back-button" asp-action="Index" asp-controller="Home">< Back</a>
   </div>
   <div class="side-menu">
-    <span>Subtotal: $@Model.Products.Sum(p => p.Price)</span>
+    <span>Subtotal: @string.Format("{0:C}", Model.Products.Sum(p => p.Price))</span>
     <span>Item Count: @Model.Products.Count()</span>
+    <form method="post">
+      @Html.HiddenFor(model => model.ObjectID)
+      <button type="submit" asp-controller="Home" asp-action="Checkout">Checkout</button>
+    </form>
   </div>
   <div id="cart-container">
     @if (Model.Products is not null)
