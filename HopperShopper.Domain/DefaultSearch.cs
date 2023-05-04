@@ -31,7 +31,7 @@ namespace HopperShopper.Domain
     {
       if (Text != string.Empty) 
       {
-        return await context.Products.Where(p => p.Name.ToLower().Contains(Text)).ToListAsync();
+        return await context.Products.Include(p => p.Categories).Where(p => p.Name.ToLower().Contains(Text)).ToListAsync();
       }
 
       return await context.Products.ToListAsync();
